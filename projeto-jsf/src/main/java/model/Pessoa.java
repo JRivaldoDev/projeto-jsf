@@ -14,6 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Pessoa implements Serializable{
@@ -24,8 +28,9 @@ public class Pessoa implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+	@Size(min = 3, max = 21, message = "Nome deve ter entre 3 a 21 caracteres!")
 	private String nome;
+	@NotBlank(message = "não pode ser nulo ou vazio")
 	private String sobrenome;
 	private int idade;
 	@Temporal(TemporalType.DATE)

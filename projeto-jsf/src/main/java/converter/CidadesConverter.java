@@ -23,7 +23,7 @@ public class CidadesConverter implements Converter, Serializable {
 		
 		Cidades cidade = new Cidades();
 		
-		if(value != null) {
+		if(value != null && !value.toString().endsWith("-")) {
 			cidade = daoCidades.buscar(Long.parseLong(value), Cidades.class);
 		}
 		

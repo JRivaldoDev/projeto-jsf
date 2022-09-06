@@ -23,7 +23,7 @@ public class EstadosConverter implements Converter, Serializable {
 		
 		Estados estado = new Estados();
 		
-		if(value != null) {
+		if(value != null && !value.toString().endsWith("-")) {
 			estado = daoEstados.buscar(Long.parseLong(value), Estados.class);
 		}
 		

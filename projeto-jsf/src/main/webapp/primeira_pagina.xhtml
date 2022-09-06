@@ -35,25 +35,22 @@
 			</h:inputFile>
 			
 			<h:outputLabel value="ID:" />
-			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
+			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" id="idUser"/>
 	
 			<h:outputLabel value="Nome:" />
-			<h:inputText value="#{pessoaBean.pessoa.nome}" required="true" requiredMessage="Informe o nome!">
-				<f:validateLength minimum="3" maximum="21"/>
+			<h:inputText value="#{pessoaBean.pessoa.nome}" required="true" requiredMessage="Informe o nome!" id="nome">
 			</h:inputText>
 				
 			<h:outputLabel value="Sobrenome:" />
-			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" required="true" requiredMessage="Informe o sobrenome!">
-				<f:validateLength minimum="3" maximum="21"/>
-			</h:inputText>
+			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" id="sobrenome"/>
 			
 			<h:outputLabel value="Idade:" required="true" />
-			<h:inputText value="#{pessoaBean.pessoa.idade}" requiredMessage="Informe a idade!" converterMessage="Idade inválida!">
+			<h:inputText value="#{pessoaBean.pessoa.idade}" id="idade" requiredMessage="Informe a idade!" converterMessage="Idade inválida!">
 				<f:convertNumber type="number" maxIntegerDigits="3"/>
 			</h:inputText>
 			
 			<h:outputLabel value="Nascimento:" />
-			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}" converterMessage="Data inválida!!!">
+			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}" converterMessage="Data inválida!!!" id="dataNascimento">
 				<f:convertDateTime pattern="dd/MM/yyyy" type="date" timeZone="GMT-03:00"/>
 			</h:inputText>
 			
@@ -102,12 +99,12 @@
 			</h:selectOneRadio>
 			
 			<h:outputLabel value="Ativo:"/>
-			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
+			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" id="ativo"/>
 			
 			<h:outputLabel value="Login:" />
-			<h:inputText value="#{pessoaBean.pessoa.login}" />
+			<h:inputText value="#{pessoaBean.pessoa.login}" id="login"/>
 			<h:outputLabel value="Senha:" />
-			<h:inputSecret value="#{pessoaBean.pessoa.senha}" />
+			<h:inputSecret value="#{pessoaBean.pessoa.senha}" id="senha"/>
 			
 			<h:outputLabel value="Perfil:"/>
 			<h:selectOneMenu id="campoPerfil" value="#{pessoaBean.pessoa.perfil}">
@@ -117,13 +114,13 @@
 			</h:selectOneMenu>
 			
 			<h:outputLabel value="Estados:"/>
-			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}" immediate="true" converter="estadosConverter">
+			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}" converter="estadosConverter" id="estados">
 				<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
 				<f:selectItems value="#{pessoaBean.estadosCidadesBean.estados}" />
 				<f:ajax event="change" execute="@this" listener="#{pessoaBean.estadosCidadesBean.carregarCidades}" render="cidades" />
 			</h:selectOneMenu>
 			<h:outputLabel value="Cidades:"/>
-			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}" immediate="true" id="cidades" converter="cidadesConverter">
+			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}" id="cidades" converter="cidadesConverter">
 				<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
 				<f:selectItems value="#{pessoaBean.estadosCidadesBean.cidades}" />
 			</h:selectOneMenu>
@@ -131,10 +128,18 @@
 			<h:outputLabel/>
 			<h:panelGroup>
 			<h:panelGrid columns="4">
-				<h:commandButton actionListener="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo" />
-				<h:commandButton actionListener="#{pessoaBean.limpar}" image="/resources/img/limpar.png" title="Limpar" style="margin-left:0.2cm;"/>
+				<h:commandButton immediate="true" image="/resources/img/novo.png" title="Novo" >
+					<f:ajax event="click" execute="@this" listener="#{pessoaBean.novo}" 
+					render="formCadastro"/>
+				</h:commandButton>
+				
+				<h:commandButton immediate="true" image="/resources/img/limpar.png" title="Limpar" style="margin-left:0.2cm;">
+					<f:ajax event="click" execute="@this" listener="#{pessoaBean.limpar}" 
+					render="formCadastro"/>
+				</h:commandButton>
+				
 				<h:commandButton actionListener="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:0.2cm;"/>
-				<h:commandButton action="#{pessoaBean.deletar}" image="/resources/img/remover.png" title="Deletar" 
+				<h:commandButton action="#{pessoaBean.deletar}" immediate="true" image="/resources/img/remover.png" title="Deletar" 
 				rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}" style="margin-left:0.2cm;"/>
 			</h:panelGrid>
 			</h:panelGroup>
