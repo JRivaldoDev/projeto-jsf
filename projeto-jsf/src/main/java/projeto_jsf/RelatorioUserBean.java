@@ -81,14 +81,6 @@ public class RelatorioUserBean implements Serializable{
 				contem = true;
 			}
 			
-			if(!estado.isEmpty()  && !contem) {
-				sql.append("p.uf= '" + estadosCidadesBean.buscarEstado(estado).getSigla() +"' ");
-				contem = true;
-			}
-			else if(!estado.isEmpty()){
-				sql.append("and p.uf= '" + estadosCidadesBean.buscarEstado(estado).getSigla() +"' ");
-			}
-			
 			if(!nivelProgramador.isEmpty() && !contem) {
 				sql.append("p.nivelProgramador= '" + nivelProgramador +"' ");
 				contem = true;
@@ -99,12 +91,28 @@ public class RelatorioUserBean implements Serializable{
 			
 			if(dataNascimento != null && !contem) {
 				sql.append("p.dataNascimento >= '" + new SimpleDateFormat("yyyy-MM-dd").format(dataNascimento) +"' ");
+				contem = true;
 			}
 			else if(dataNascimento != null) {
 				sql.append("and p.dataNascimento >= '" + new SimpleDateFormat("yyyy-MM-dd").format(dataNascimento) +"' ");
 			}
 			
-			pessoas = daoPessoa.getEntityManager().createQuery(sql.toString() + " order by p.nome asc").getResultList();
+			if(!estado.isEmpty()  && !contem) {
+				sql.append("p.estados= :estados ");
+				pessoas = daoPessoa.getEntityManager().createQuery(sql.toString() + " order by p.nome asc")
+						.setParameter("estados", estadosCidadesBean.buscarEstado(estado))
+						.getResultList();
+			}
+			else if(!estado.isEmpty()){
+				sql.append("and p.estados= :estados ");
+				pessoas = daoPessoa.getEntityManager().createQuery(sql.toString() + " order by p.nome asc")
+						.setParameter("estados", estadosCidadesBean.buscarEstado(estado))
+						.getResultList();
+			}
+			else {
+				pessoas = daoPessoa.getEntityManager().createQuery(sql.toString() + " order by p.nome asc").getResultList();
+			}
+			
 									
 			
 		} catch (Exception e) {

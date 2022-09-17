@@ -34,10 +34,10 @@
 			<h:outputLabel value="Programador:"/>
 			<b:selectOneMenu value="#{relatorioUserBean.nivelProgramador}" >
 				<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
-				<f:selectItem itemValue="J" itemLabel="Junior" />
-				<f:selectItem itemValue="P" itemLabel="Pleno" />
-				<f:selectItem itemValue="S" itemLabel="Senior" />
-				<f:selectItem itemValue="E" itemLabel="Especialista" />
+				<f:selectItem itemValue="JUNIOR" itemLabel="Junior" />
+				<f:selectItem itemValue="PLENO" itemLabel="Pleno" />
+				<f:selectItem itemValue="SENIOR" itemLabel="Senior" />
+				<f:selectItem itemValue="ESPECIALISTA" itemLabel="Especialista" />
 			</b:selectOneMenu>
 			</b:column>
 			
@@ -69,7 +69,7 @@
 			
 			<b:dataTableColumn value="#{p.id}"/>
 			<b:dataTableColumn value="#{p.nome}" label="Nome"/>
-			<b:dataTableColumn value="#{p.uf}" label="Estado" />
+			<b:dataTableColumn value="#{p.estados.nome}" label="Estado" />
 			<b:dataTableColumn value="#{p.nivelProgramador}" label="Programador" />
 			<b:dataTableColumn value="#{p.dataNascimento}" label="Data de Nascimento"/>
 			

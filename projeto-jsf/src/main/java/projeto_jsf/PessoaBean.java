@@ -71,10 +71,38 @@ public class PessoaBean {
 	}
 
 	public String salvar() {
-		pessoa = daoPessoa.salvarMerge(pessoa);
-		mostrarMsg("Operação realizada com sucesso!!!");
-		carregarPessoas();
+		if(existeLogin(pessoa.getLogin())) {
+			mostrarMsg("Já existe um usuário com o login: " + pessoa.getLogin());
+		}else {
+			pessoa = daoPessoa.salvarMerge(pessoa);
+			mostrarMsg("Operação realizada com sucesso!!!");
+			carregarPessoas();
+		}
+		
 		return "";
+	}
+	
+	private boolean existeLogin(String login) {
+		boolean existe = false;
+		
+		try {
+		Pessoa	usuario = (Pessoa) daoPessoa.getEntityManager()
+					.createQuery("from Pessoa where upper(login)= :login" )
+					.setParameter("login", login.toUpperCase()).getSingleResult();
+		
+		if(usuario != null) {
+			existe = true;
+			
+			if(pessoa.getId() == usuario.getId()) {
+				existe = false;
+			}
+		}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+		return existe;
 	}
 
 	public void novo() {
@@ -92,6 +120,7 @@ public class PessoaBean {
 		daoPessoa.deletar(pessoa);
 		pessoa = new Pessoa();
 		mostrarMsg("Cadastro deletado com sucesso!!!");
+		limpar();
 		carregarPessoas();
 		return "";
 	}

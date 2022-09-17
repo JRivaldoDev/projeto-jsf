@@ -28,7 +28,7 @@ public class Pessoa implements Serializable{
 	private Long id;
 	@Size(min = 3, max = 21, message = "Nome deve ter entre 3 a 21 caracteres!")
 	private String nome;
-	@NotBlank(message = "não pode ser nulo ou vazio")
+	@Size(min = 3, max = 21, message = "Sobrenome deve ter entre 3 a 21 caracteres!")
 	private String sobrenome;
 	private int idade;
 	@Temporal(TemporalType.DATE)
