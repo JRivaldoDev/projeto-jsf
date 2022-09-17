@@ -3,14 +3,15 @@ package projeto_jsf;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import dao.DaoGeneric;
 import model.Cidades;
 import model.Estados;
-
+import net.bootsfaces.component.selectOneMenu.SelectOneMenu;
 
 public class EstadosCidadesBean{
 	
@@ -63,7 +64,7 @@ public class EstadosCidadesBean{
 	public void carregarCidades(AjaxBehaviorEvent event) {
 		DaoGeneric<Cidades> daoCidades = new DaoGeneric<Cidades>();
 		
-		estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue();
+		estado = (Estados) ((SelectOneMenu) event.getSource()).getValue();
 		
 		if(estado != null) {
 			List<Cidades> listCidades = daoCidades.getEntityManager().createQuery("from Cidades where estados= :estados")
@@ -94,5 +95,11 @@ public class EstadosCidadesBean{
 
 	}
 	
+	public Estados buscarEstado(String id) {
+		DaoGeneric<Estados> daoEstados = new DaoGeneric<Estados>();
+		Estados uf = daoEstados.buscar(Long.parseLong(id), Estados.class);
+				
+		return uf;
+	}
 	
 }

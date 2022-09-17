@@ -61,6 +61,18 @@ private EntityManager entityManager = HibernateUtil.getEntityManager();
 		return lista;
 	}
 	
+	public List<E> listarLimitado(Class<E> entidade){
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		
+		@SuppressWarnings("unchecked")
+		List<E> lista = entityManager.createQuery("from " + entidade.getName() + " order by id desc")
+		.setMaxResults(10).getResultList();
+		transaction.commit();
+		
+		return lista;
+	}
+	
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}

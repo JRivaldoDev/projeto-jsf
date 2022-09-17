@@ -3,6 +3,7 @@ package projeto_jsf;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -23,7 +24,7 @@ public class LancamentoBean {
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	
 	public List<Lancamento> getLancamentos() {
-		carregarLancamentos();
+		carregarLancamentosLimit();
 		return lancamentos;
 	}
 	public void setLancamentos(List<Lancamento> lancamentos) {
@@ -46,6 +47,7 @@ public class LancamentoBean {
 	public String remover() {
 		daoLancamento.deletar(lancamento);
 		lancamento = new Lancamento();
+		mostrarMsg("Operação realizada com sucesso!");
 		carregarLancamentos();
 		return "";
 	}
@@ -73,6 +75,19 @@ public class LancamentoBean {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void carregarLancamentosLimit() {
+		
+		lancamentos = daoLancamento.getEntityManager().createQuery
+				("from Lancamento where usuario= :usuario order by id desc")
+				.setParameter("usuario", usuarioLogado())
+				.setMaxResults(10)
+				.getResultList();
+		if(lancamentos == null) {
+			lancamentos = new ArrayList<Lancamento>();
+		}
+	}
+	
 	private Pessoa usuarioLogado() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
@@ -83,6 +98,12 @@ public class LancamentoBean {
 		Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
 		
 		return usuarioLogado;
+	}
+	
+	private void mostrarMsg(String msg) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		FacesMessage message = new FacesMessage(msg);
+		context.addMessage(null, message);
 	}
 	
 

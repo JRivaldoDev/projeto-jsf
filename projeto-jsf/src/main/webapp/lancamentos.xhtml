@@ -4,39 +4,46 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
 
 	<title>Lançamentos</title>
-
+	
+	<h:outputStylesheet name="css/estilo.css" position="last"/>
+	
 
 </h:head>
 
-<h:body style="background-color: #DCDCDC;">
+<h:body >
 	<ui:include src="/menu.xhtml"/>
+	<b:messages />
 	<h:form id="formLancamentos" style="margin-left:40%">
-
-		<br />
+	<b:panel style="width:40%">
 		<h:panelGrid columns="2">
 			<f:facet name="header">
 				<h:outputLabel value="Lançamentos" />
 			</f:facet>
 
 			<h:outputLabel value="ID:" />
-			<h:inputText value="#{lancamentoBean.lancamento.id}" />
+			<b:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
 
 			<h:outputLabel value="Nota:" />
-			<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" />
+			<b:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" required="true" requiredMessage="Informe o número da nota!"/>
 
 			<h:outputLabel value="Origem:" />
-			<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" />
+			<b:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" required="true" requiredMessage="Informe a origem!"/>
 
 			<h:outputLabel value="Destino:" />
-			<h:inputText value="#{lancamentoBean.lancamento.empresaDestino}" />
+			<b:inputText value="#{lancamentoBean.lancamento.empresaDestino}" required="true" requiredMessage="Informe o destino!"/>
+			
+			<h:outputLabel value="Data:" />
+			<b:dateTimePicker value="#{lancamentoBean.lancamento.dataEnvio}" format="DD/MM/YYYY" required="true" requiredMessage="Informe a data da nota!"/>
 			
 			<h:outputLabel/>
 			<h:panelGroup>
+			<h:outputLabel/>
 				<h:panelGrid columns="4">
 					<h:commandButton action="#{lancamentoBean.novo}" image="/resources/img/novo-arquivo.png" title="Novo" />
 					<h:commandButton image="/resources/img/limpar.png" title="Limpar" type="reset" style="margin-left:0.2cm;"/>
@@ -46,45 +53,32 @@
 			</h:panelGroup>
 			
 		</h:panelGrid>
-		
+		</b:panel>
+	</h:form>
+	
 		<br />
-		<h:dataTable value="#{lancamentoBean.lancamentos}" var="l" border="1" cellpadding="3">
-		<f:facet name="header">Lista de Notas Lançadas</f:facet>
-			<h:column>
-			<f:facet name="header">ID</f:facet>
-				<h:outputText value="#{l.id}" />
-			</h:column>
-			<h:column>
-			<f:facet name="header">Nota</f:facet>
-				<h:outputText value="#{l.numeroNotaFiscal}" />
-			</h:column>
-			<h:column>
-			<f:facet name="header">Origem</f:facet>
-				<h:outputText value="#{l.empresaOrigem}" />
-			</h:column>
-			<h:column>
-			<f:facet name="header">Destino</f:facet>
-				<h:outputText value="#{l.empresaDestino}" />
-			</h:column>
-			
-			<h:column>
-			<f:facet name="header">Acão</f:facet>
-			<h:column>
+	
+	<h:form style="width:50%;margin-left:30%">
+		<b:panel>
+		<b:dataTable value="#{lancamentoBean.lancamentos}" var="l"  caption="Lista de Notas Lançadas" >
+			<b:dataTableColumn value="#{l.id}"/>
+			<b:dataTableColumn value="#{l.numeroNotaFiscal}" label="Número" />
+			<b:dataTableColumn value="#{l.empresaOrigem}" label="Origem" />
+			<b:dataTableColumn value="#{l.empresaDestino}" label="Destino"/>
+			<b:dataTableColumn value="#{l.dataEnvio}" label="Data"/>
+			<b:dataTableColumn label="Ação" >
 				<h:commandLink title="Editar">
-					<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}" />
-					<h:graphicImage library="img" name="editar.png"/>
-				</h:commandLink>
-			</h:column>
-			<h:column>
+						<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}" />
+						<h:graphicImage library="img" name="editar.png" style="margin-left:0.9cm"/>
+					</h:commandLink>
 				<h:commandLink title="Excluir" action="#{lancamentoBean.remover}" >
-					<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}"/>
-					<h:graphicImage library="img" name="excluir-documento.png" style="margin-left:0.2cm;"/>
-				</h:commandLink>
-			</h:column>
-			</h:column>
-
-		</h:dataTable>
-
+						<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}"/>
+						<h:graphicImage library="img" name="excluir-documento.png" style="margin-left:0.9cm"/>
+					</h:commandLink>
+			</b:dataTableColumn>
+							
+			</b:dataTable>
+		</b:panel>
 	</h:form>
 
 

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ForeignKey;
 
@@ -27,6 +30,8 @@ public class Lancamento implements Serializable{
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@ForeignKey(name="pessoa_fk")
 	private Pessoa usuario;
+	@Temporal(TemporalType.DATE)
+	private Date dataEnvio;
 	
 	public Long getId() {
 		return id;
@@ -57,6 +62,12 @@ public class Lancamento implements Serializable{
 	}
 	public void setUsuario(Pessoa usuario) {
 		this.usuario = usuario;
+	}
+	public Date getDataEnvio() {
+		return dataEnvio;
+	}
+	public void setDataEnvio(Date dataEnvio) {
+		this.dataEnvio = dataEnvio;
 	}
 	
 	@Override

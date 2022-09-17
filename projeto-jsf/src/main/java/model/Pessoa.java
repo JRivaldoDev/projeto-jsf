@@ -14,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -48,6 +46,7 @@ public class Pessoa implements Serializable{
 	private String bairro;
 	private String cidade;
 	private String uf;
+	private String cpf;
 	
 	private Estados estados;
 	private Cidades cidades;
@@ -199,6 +198,13 @@ public class Pessoa implements Serializable{
 	public void setFotoOriginalBase64(byte[] fotoOriginalBase64) {
 		this.fotoOriginalBase64 = fotoOriginalBase64;
 	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	public String getCpf() {
+		return cpf;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

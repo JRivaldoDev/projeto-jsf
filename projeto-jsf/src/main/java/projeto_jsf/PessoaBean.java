@@ -70,10 +70,11 @@ public class PessoaBean {
 		this.arquivoFoto = arquivoFoto;
 	}
 
-	public void salvar() {
+	public String salvar() {
 		pessoa = daoPessoa.salvarMerge(pessoa);
 		mostrarMsg("Operação realizada com sucesso!!!");
 		carregarPessoas();
+		return "";
 	}
 
 	public void novo() {
@@ -101,7 +102,9 @@ public class PessoaBean {
 	}
 
 	public String logar() {
-
+		
+		try {
+			
 		Pessoa usuarioLogado = (Pessoa) daoPessoa.getEntityManager()
 				.createQuery("from Pessoa where login= :login and senha = :senha")
 				.setParameter("login", pessoa.getLogin()).setParameter("senha", pessoa.getSenha()).getSingleResult();
@@ -116,6 +119,9 @@ public class PessoaBean {
 			session.setAttribute("usuarioLogado", usuarioLogado);
 			return "primeira_pagina.jsf";
 
+		}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Usuário não encontrado!"));
 		}
 
 		return "index.jsf";
