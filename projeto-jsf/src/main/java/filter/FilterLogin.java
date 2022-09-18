@@ -24,7 +24,9 @@ public class FilterLogin implements Filter {
 		HttpServletRequest request2 = (HttpServletRequest) request;
 		HttpSession session = request2.getSession();
 		
-		Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
+		Pessoa usuarioLogado = new Pessoa();
+		
+		usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
 		String url = request2.getServletPath();
 		
 		if(!url.equalsIgnoreCase("index.jsf") && usuarioLogado == null) {
