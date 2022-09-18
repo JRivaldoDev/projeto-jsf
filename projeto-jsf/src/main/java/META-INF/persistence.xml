@@ -5,7 +5,6 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
 	<persistence-unit name="d98dc69o74d070">
-	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>model.Pessoa</class>
 		<class>model.Lancamento</class>
 		<class>model.Estados</class>
