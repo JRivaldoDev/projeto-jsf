@@ -6,7 +6,7 @@ import javax.persistence.Persistence;
 
 public class HibernateUtil {
 	
-private static EntityManagerFactory factory;
+private static EntityManagerFactory factory = null;
 	
 	static  {
 		//factory = Persistence.createEntityManagerFactory("projeto-jsf");
