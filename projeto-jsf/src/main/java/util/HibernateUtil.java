@@ -17,7 +17,8 @@ private static EntityManagerFactory factory = null;
 		try {
 			
 			if(factory == null) {
-				factory = Persistence.createEntityManagerFactory("projeto-jsf");
+				//factory = Persistence.createEntityManagerFactory("projeto-jsf");
+				factory = Persistence.createEntityManagerFactory("d98dc69o74d070");
 			}
 			
 		} catch (Exception e) {
