@@ -6,27 +6,14 @@ import javax.persistence.Persistence;
 
 public class HibernateUtil {
 	
-private static EntityManagerFactory factory = null;
+private static EntityManagerFactory factory;
 	
 	static  {
-		init();
+		//factory = Persistence.createEntityManagerFactory("projeto-jsf");
+		factory = Persistence.createEntityManagerFactory("d98dc69o74d070");
 	}
 	
-	private static void init() {
 		
-		try {
-			
-			if(factory == null) {
-				//factory = Persistence.createEntityManagerFactory("projeto-jsf");
-				factory = Persistence.createEntityManagerFactory("d98dc69o74d070");
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
 	public static EntityManager getEntityManager() {
 		return factory.createEntityManager(); //provê a persistencia
 	}
