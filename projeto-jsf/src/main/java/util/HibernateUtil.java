@@ -9,11 +9,24 @@ public class HibernateUtil {
 private static EntityManagerFactory factory = null;
 	
 	static  {
-		//factory = Persistence.createEntityManagerFactory("projeto-jsf");
-		factory = Persistence.createEntityManagerFactory("d98dc69o74d070");
+		init();
 	}
 	
+	private static void init() {
 		
+		try {
+			
+			if(factory == null) {
+				//factory = Persistence.createEntityManagerFactory("projeto-jsf");
+				factory = Persistence.createEntityManagerFactory("d98dc69o74d070");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public static EntityManager getEntityManager() {
 		return factory.createEntityManager(); //provê a persistencia
 	}
